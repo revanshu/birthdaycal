@@ -25,7 +25,11 @@ class App extends Component {
 
   getInitials(name) {
     let split = name.split(" ");
-    return (split[0][0] + split[1][0]).toUpperCase();
+    let result = "";
+    for (let i = 0; i < split.length; i++) {
+      result += split[i][0];
+    }
+    return result.toUpperCase();
   }
 
   checkYear(birthday, year) {
@@ -33,12 +37,23 @@ class App extends Component {
     return year === dateSplit[2];
   }
 
-  getDay(birthday) {
+  getDate(birthday) {
     let dateSplit = birthday.split("/");
     let correctFormat = `${dateSplit[2]}-${dateSplit[0]}-${dateSplit[1]}`;
-    let date = new Date(correctFormat);
+    return new Date(correctFormat);
+  }
+
+  getDay(birthday) {
+    let date = this.getDate(birthday);
     let day = date.getDay();
     return day;
+  }
+
+  sortWithAgeComparator(a, b) {
+    let bday1 = this.getDate(a.birthday);
+    let bday2 = this.getDate(b.birthday);
+    var ageDif = bday2.getTime() - bday1.getTime();
+    return ageDif;
   }
 
   onUpdate() {
@@ -52,16 +67,30 @@ class App extends Component {
       alert("Please Enter Year as Number");
       return;
     }
-
-    const jsonData = JSON.parse(jsonText);
+    let jsonData;
+    try {
+      jsonData = JSON.parse(jsonText);
+    } catch (e) {
+      alert("JSON Data is wrong. Check again");
+      return;
+    }
     let data = {};
-    for (let i = 0; i < jsonData.length; i++) {
-      if (this.checkYear(jsonData[i].birthday, yearText)) {
-        let day = this.getDay(jsonData[i].birthday);
-        let initials = this.getInitials(jsonData[i].name);
-        if (!data[weeks[day]]) data[weeks[day]] = [];
-        data[weeks[day]].push(initials);
+    let sortedData = jsonData
+      .filter(d => {
+        return this.checkYear(d.birthday, yearText);
+      })
+      .sort((a, b) => {
+        return this.sortWithAgeComparator(a, b);
+      });
+    for (let i = 0; i < sortedData.length; i++) {
+      let day = this.getDay(sortedData[i].birthday);
+      let initials = this.getInitials(sortedData[i].name);
+      if (!initials || !weeks[day]) {
+        alert("Something wrong with data. Please try again");
+        return;
       }
+      if (!data[weeks[day]]) data[weeks[day]] = [];
+      data[weeks[day]].push(initials);
     }
 
     this.setState({ weeksData: data });
@@ -82,8 +111,6 @@ class App extends Component {
         <div className="input-row">
           <div className="json-input-container">
             <textarea
-              rows="4"
-              cols="50"
               value={this.state.jsonText}
               className="text-area"
               onChange={e => {

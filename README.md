@@ -1,69 +1,34 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+EATURES / FUNCTIONALITIES:
 
-## Available Scripts
+JSON manipulation:
+The JSON are read through a text area and read as a string.
+This is then parse using JSON.parse with try catch around it.
 
-In the project directory, you can run:
+BLOCK Rendering:
+The week content is of size: 100*100
+Every time if a week has n number of initials. I am calculating the ceiling root of n
+Eg: 10 -> root: 3.something -> 4.
+Then I am calculating the width and height accordingly for the initials block i.e 100/x*100/x
+Blocks are wrapped using flex and flex wrap.
 
-### `npm start`
+Date Calculations:
+Date calculation are done using new Date();
+age difference using new Date and .getTime (for sorting)
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Sorting and FIltering:
+As soon as he clicks on submit. I am filtering json data with year provided and sorting with age.
+Then I am pushing corresponding initials to their respective days and then passing on to weekview.js
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+Error Handling:
+I am not allowing to submit until he has entered both field.
+If he enter wrong year as a string it will alert error
+If he enter number which does not matches in json it will show empty weeks
+If he enter wrong JSON. It will alert error
+If User name has multiple or one initial. The week box will show it accordingly
 
-### `npm test`
+Responsive:
+The page is responsive that is if you reduce the width of the page. Its content will start shifting down and will still be visible on the screen
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
-# birthdaycal
+Components:
+App.js: is the main component which handles the state and passing it to child component
+WeekView.js: is the component for week view.
